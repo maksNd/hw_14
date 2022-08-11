@@ -35,15 +35,35 @@ def search_by_years_range(year_1, year_2) -> list:
                 limit 100
     """
     data_from_db = get_data_from_db_by_query(query)
+    result = []
+    for data in data_from_db:
+        result.append({
+            'title': data[0].replace('\u200b', ''),
+            'release_year': data[1]
+        })
+    return result
+
+
+def search_by_rating(rating_group: str):
+    rating_group = rating_group.lower()
+    if rating_group == 'children':
+        rating_query = "rating like 'R'"
+    if rating_group == 'family':
+        rating_query = "rating like 'G' or rating like 'PG' or rating like 'PG-13'"
+    if rating_group == 'adult':
+        # rating_query = "('R', 'NC-17')"
+        rating_query = "rating like 'R' or rating like 'NC-17'"
+
+    query = f"""
+                select title, rating, description
+                from netflix
+                where {rating_query}
+                limit 100
+    """
+    data_from_db = get_data_from_db_by_query(query)
     return data_from_db
 
 
-
-def search_by_rating():
-    ...
-
-
-from pprint import pp
-
-print(search_by_years_range(2010, 2020))
+# from pprint import pp
+# pp(search_by_rating('adult'))
 # print(type(search_for_title('A Yellow Bird')))

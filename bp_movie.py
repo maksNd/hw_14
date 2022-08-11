@@ -24,3 +24,8 @@ def page_search_by_rating_group(rating_group):
 @bp_movie.route('/genre/<genre>')
 def page_search_by_genre(genre):
     return jsonify(database_dao.search_by_genre(genre))
+
+
+@bp_movie.route('/type_year_genre/<type>/<int:year>/<genre>')
+def page_by_type_year_genre(type, year, genre):
+    return jsonify(database_dao.search_by_type_release_year_genre(type, year, genre))

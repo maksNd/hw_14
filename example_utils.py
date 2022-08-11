@@ -4,7 +4,7 @@ from pprint import pp
 
 def get_data_from_db_by_query(query: str) -> list:
     "Create connection and get data from db by query"
-    with sqlite3.connect('./netflix.db') as connection:
+    with sqlite3.connect('data/netflix.db') as connection:
         cursor = connection.cursor()
         cursor.execute(query)
 
